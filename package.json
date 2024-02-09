@@ -4,19 +4,20 @@
   "description": "In Progress",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "stop": "taskkill -f -im node.exe"
+    "start": "node app.js"
   },
   "author": "Lorenzo Satta Chiris",
   "license": "ISC",
   "dependencies": {
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
-    "express-subdomain": "^1.0.5",
+    "express-subdomain": "^1.0.6",
     "helmet": "^7.1.0",
-    "morgan": "^1.10.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
     "nodemon": "^3.0.3"
   }
 }

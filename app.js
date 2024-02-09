@@ -5,45 +5,32 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const subdomain = require("express-subdomain");
 const helmet = require("helmet");
-const fs = require('fs');
 
+/* ----- Initial Configuration  ----- */
+const app = express();
 
-/* ----- Loading Routes  ----- */
-let app = express();
-let router = express.Router();
-
-app.use(subdomain("app", router));
-app.set("view engine", "ejs");
-app.set("views", [__dirname + "/pages", __dirname + "/app"]);
-app.use(express.static(__dirname + "/public"));
-
+/* ----- Packages  ----- */
 app.use(logger("dev"));
 app.disable('x-powered-by')
-app.use((req, res, next) => {
-    if (req.originalUrl.includes("/webhook") || req.headers['stripe-signature'] != null) {
-        next();
-    } else {
-        express.json()(req, res, next);
-    }
-});
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
-app.use(
-    helmet.frameguard({
-        action: "sameorigin",
-    })
-);
-app.use(helmet.dnsPrefetchControl());
-app.use(helmet.ieNoOpen());
-app.use(helmet.xssFilter());
+app.use(helmet())
+app.disable('x-powered-by')
 
-require('dotenv').config({ path: 'comment.env' })
+/* ----- Loading Routes  ----- */
+app.set("view engine", "ejs");
+app.engine('ejs', require('ejs').__express);
+app.set("views", [__dirname + "/pages", __dirname + "/app"]);
+app.use(express.static(__dirname + "/public"));
+
+/* ----- SubDomain (Dashboard)  ----- */
+const router = express.Router();
+app.use(subdomain("app", router));
 
 /* ----- Loading Files  ----- */
-const static = require('./routes/static/static_routes.js'); 
-const dynamic = require('./routes/dynamic/dynamic_routes.js'); 
-
+const static = require('./routes/static/static_routes.js');
+const dynamic = require('./routes/dynamic/dynamic_routes.js');
 
 /* ----- Static Website - Marketing - Not Logged ----- */
 app.use("/", static);
@@ -55,8 +42,22 @@ router.use("/", dynamic);
 app.use(function (err, req, res, next) {
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "production" ? err : {};
-    res.status(err.status || 500);
-    res.render("error");
+
+    if (req.app.get("env") === "development") {
+        // Show detailed error information for developers
+        res.status(err.status || 500);
+        res.json({
+            error: {
+                code: err.status || 500,
+                name: err.name,
+                message: err.message,
+                stack: err.stack,
+            }
+        });
+    } else {
+        res.status(err.status || 500);
+        res.render("error");
+    }
 });
 
 app.get("*", function (req, res, next) {
