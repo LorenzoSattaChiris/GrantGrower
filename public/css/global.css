@@ -89,8 +89,7 @@ td {
 
 /* Global styles */
 html {
-  /* overflow: scroll;
-  overflow-x: hidden; */
+  overflow-x: hidden
 }
 
 body {
@@ -106,8 +105,15 @@ a {
 
 /* Logo */
 .logo {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 140px;
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  width: 10%;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 100px;
+    left: calc(50% - 70px);
+  }
 }
