@@ -32,10 +32,10 @@ app.use(subdomain("app", router));
 const static = require('./routes/static/static_routes.js');
 const dynamic = require('./routes/dynamic/dynamic_routes.js');
 
-/* ----- Static Website - Marketing - Not Logged ----- */
+/* ----- Static Website - Not Logged ----- */
 app.use("/", static);
 
-/* ----- Dynamy Website - Dashboard - Logged In ----- */
+/* ----- Dynamy Website - Logged In ----- */
 router.use("/", dynamic);
 
 /* ----- Server ----- */
