@@ -1,7 +1,7 @@
 {
-  "name": "#UPDATE",
-  "version": "#UPDATE",
-  "description": "#UPDATE",
+  "name": "Lorenzo Satta Chiris Portfolio",
+  "version": "1.1",
+  "description": "Contact at enquiry@lsattachiris.live",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
