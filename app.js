@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const subdomain = require("express-subdomain");
 const helmet = require("helmet");
+const dotenv = require("dotenv");
+const axios = require("axios");
 
 /* ----- Initial Configuration  ----- */
 const app = express();
@@ -13,10 +15,11 @@ const app = express();
 app.use(logger("dev"));
 app.disable('x-powered-by')
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(compression());
-app.use(helmet())
-app.disable('x-powered-by')
+app.use(helmet({ contentSecurityPolicy: false }));
+dotenv.config();
 
 /* ----- Loading Routes  ----- */
 app.set("view engine", "ejs");
@@ -32,11 +35,15 @@ app.use(subdomain("app", router));
 const static = require('./routes/static/static_routes.js');
 const dynamic = require('./routes/dynamic/dynamic_routes.js');
 
-/* ----- Static Website - Not Logged ----- */
+/* ----- Static Website ----- */
 app.use("/", static);
 
-/* ----- Dynamy Website - Logged In ----- */
+/* ----- Dynamy Website ----- */
 router.use("/", dynamic);
+
+/* ----- Other Routes  ----- */
+const chatgptRouter = require('./routes/utils/chatgpt.js');
+app.use('/api', chatgptRouter);
 
 /* ----- Server ----- */
 app.use(function (err, req, res, next) {
