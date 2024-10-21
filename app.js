@@ -25,6 +25,11 @@ dotenv.config();
 app.set("view engine", "ejs");
 app.engine('ejs', require('ejs').__express);
 app.set("views", [__dirname + "/pages", __dirname + "/app"]);
+app.use(express.static(__dirname + "/css"));
+app.use(express.static(__dirname + "/js"));
+app.use(express.static(__dirname + "/images"));
+app.use(express.static(__dirname + "/logos"));
+app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/public"));
 
 /* ----- SubDomain (Dashboard)  ----- */
