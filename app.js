@@ -9,8 +9,8 @@ const dotenv = require("dotenv");
 const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
-const os = require("os"); // Ensure 'os' is imported for server information
-const safeGet = require('./utils/safeGet'); // Import the utility function
+const os = require("os"); 
+const safeGet = require('./utils/safeGet'); 
 
 /* ----- Initial Configuration  ----- */
 const app = express();
@@ -32,6 +32,7 @@ app.set("views", [__dirname + "/pages", __dirname + "/app"]);
 app.use(express.static(__dirname + "/css"));
 app.use(express.static(__dirname + "/js"));
 app.use(express.static(__dirname + "/images"));
+app.use(express.static(path.join(__dirname, 'Fonts')));
 app.use(express.static(__dirname + "/logos"));
 app.use(express.static(__dirname + "/assets"));
 app.use(express.static(__dirname + "/public"));
@@ -63,7 +64,6 @@ app.use(function (req, res, next) {
 });
 
 const highlightStackTrace = require('./utils/highlightStackTrace');
-
 
 // ----- Updated Error-Handling Middleware -----
 app.use((err, req, res, next) => {

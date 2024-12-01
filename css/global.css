@@ -84,9 +84,6 @@ td {
   }
 }
 
-/* Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 /* Global styles */
 html {
   overflow-x: hidden
@@ -100,20 +97,5 @@ body {
 
 a {
   text-decoration: none;
-  color: #007bff;
-}
-
-/* Logo */
-.logo {
-  position: fixed;
-  top: 2%;
-  left: 2%;
-  width: 10%;
-}
-
-@media screen and (max-width: 768px) {
-  .logo {
-    width: 100px;
-    left: calc(50% - 70px);
-  }
+  color: #000;
 }

@@ -1,13 +1,28 @@
 /* Global Colors */
 :root {
-    --primary-color: #000; 
-    --secondary-color: #000; 
+    --primary-color: #4CAF50; 
+    --secondary-color: #42A5F5; 
+    --accent-color: #FF9800;
     --background-color: #fff; 
-    --text-color: #000; 
+    --text-color: #000;
     --error-color: #e74c3c; 
     --warning-color: #f1c40f; 
     --success-color: #27ae60; 
 }
 
 /* Global Font */
+@import url('/css/fonts.css');
+
+body {
+    font-family: 'Poppins', 'Merriweather', 'Nunito', sans-serif; 
+}
+
+/* Fallbacks */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+p, li, blockquote {
+    font-family: 'Poppins';
+}
 

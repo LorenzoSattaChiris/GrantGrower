@@ -1,11 +1,12 @@
 {
-  "name": "Lorenzo Satta Chiris Portfolio",
+  "name": "Template",
   "version": "1.1",
-  "description": "Contact at enquiry@lsattachiris.live",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "serve": "concurrently \"nodemon app.js\" \"browser-sync start --config bs-config.js\""
+    "serve": "concurrently \"nodemon app.js\" \"browser-sync start --config bs-config.js\"",
+    "s": "npm run serve"
   },
   "author": "Lorenzo Satta Chiris",
   "license": "ISC",

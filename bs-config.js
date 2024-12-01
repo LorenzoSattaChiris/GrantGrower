@@ -9,6 +9,9 @@ module.exports = {
         "javascript/**/*.js",        // All JS files in 'javascript' folder
         "app/**/*.ejs",              // All EJS files in 'app' and subfolders
         "app/partials/**/*.ejs",     // All EJS files in 'app/partials'
+        "logos/**/*",                // All files in the 'logos' folder
+        "images/**/*",               // All files in the 'images' folder
+        "assets/**/*",           // All files in the 'assets' folder
     ],
     port: 3001,
     notify: false,
