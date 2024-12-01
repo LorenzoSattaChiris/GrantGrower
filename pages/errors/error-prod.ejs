@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error <%= status %></title>
+    <link rel="stylesheet" href="errors/error-prod.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Oops! Something went wrong.</h1>
+        <p>Error Code: <b><%= status %></b></p>
+    </header>
+
+    <main class="main-content">
+        <p>We're sorry for the inconvenience. Please try again later or go back to the homepage.</p>
+        <a href="/" class="btn">Go Back to Home</a>
+    </main>
+</body>
+</html>

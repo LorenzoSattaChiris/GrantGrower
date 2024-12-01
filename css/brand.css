@@ -1,0 +1,13 @@
+/* Global Colors */
+:root {
+    --primary-color: #000; 
+    --secondary-color: #000; 
+    --background-color: #fff; 
+    --text-color: #000; 
+    --error-color: #e74c3c; 
+    --warning-color: #f1c40f; 
+    --success-color: #27ae60; 
+}
+
+/* Global Font */
+

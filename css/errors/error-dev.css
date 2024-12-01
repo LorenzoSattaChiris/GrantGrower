@@ -1,0 +1,175 @@
+/* Import Nunito Font */
+@font-face {
+    font-family: 'Nunito';
+    src: url('/Fonts/Nunito/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 200 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Nunito Italic';
+    src: url('/Fonts/Nunito/Nunito-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 200 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+    font-size: 4em; /* Increased font size */
+    font-weight: 700;
+    color: #333333;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+.info-item > strong {
+    font-weight: 500;
+    color: #333333;
+}
+
+.value {
+    font-weight: 700;          
+    color: #000000;           
+    background-color: #f0f0f0;  
+    padding: 2px 4px;          
+    border-radius: 3px;      
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #000000;
+    padding-bottom: 5px;
+    color: #333333;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #333333;
+}
+
+.info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+pre.stack-trace {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Nunito Italic', sans-serif;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    position: relative;
+    font-size: 0.95em;
+    color: #1a1a1a;
+    border-left: 5px solid #dc3545; /* Red line to indicate error */
+}
+
+.stack-trace {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Nunito', monospace;
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+.stack-trace .error-message {
+    color: #dc3545;
+    font-weight: 700;
+}
+
+.stack-trace .stack-highlight {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.stack-trace .stack-node-modules {
+    color: #6c757d;
+    font-style: italic;
+}
+
+
+
+
+/* Highlighting error lines in stack trace */
+pre.stack-trace .error-line {
+    background-color: #ffe6e6;
+    padding: 2px 5px;
+    border-radius: 3px;
+    display: block;
+}
+
+/* Styling Query Parameters and Request Body */
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 10px;
+    }
+
+    header h1 {
+        font-size: 3em; /* Adjusted for smaller screens */
+    }
+
+    h2 {
+        font-size: 1.75em;
+    }
+
+    h3 {
+        font-size: 1.3em;
+    }
+}

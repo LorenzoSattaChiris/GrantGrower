@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error <%= status || "Unknown Status" %> - Debug Information</title>
+    <link rel="stylesheet" href="errors/error-dev.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Error <%= status || "Unknown Status" %></h1>
+            <p><strong>Message:</strong> <span class="value"><%= message %></span></p>
+            <p><strong>Name:</strong> <span class="value"><%= name %></span></p>
+        </header>
+
+        <!-- Stack Trace Section -->
+        <section>
+            <h2>Stack Trace</h2>
+            <pre class="stack-trace"><%- formattedStack %></pre>
+            <p><strong>Timestamp:</strong> <span class="value"><%= errorTimestamp %></span></p>
+            <p><strong>Code:</strong> <span class="value"><%= code %></span></p>
+        </section>
+
+        <!-- Request Information Section -->
+        <section>
+            <h2>Request Information</h2>
+            <div class="info-list">
+                <div class="info-item">
+                    <strong>HTTP Method</strong>
+                    <span class="value"><%= networkInfo.method %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Protocol</strong>
+                    <span class="value"><%= networkInfo.protocol %></span>
+                </div>
+                <div class="info-item">
+                    <strong>URL</strong>
+                    <span class="value"><%= networkInfo.url %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Client IP</strong>
+                    <span class="value"><%= networkInfo.clientIP %></span>
+                </div>
+                <div class="info-item">
+                    <strong>User-Agent</strong>
+                    <span class="value"><%= networkInfo.userAgent %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Host</strong>
+                    <span class="value"><%= networkInfo.host %></span>
+                </div>
+            </div>
+
+            <% if (Object.keys(networkInfo.queryParams).length > 0) { %>
+                <h3>Query Parameters:</h3>
+                <ul>
+                    <% Object.entries(networkInfo.queryParams).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= JSON.stringify(value) %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><strong>Query Parameters:</strong> <span class="value">No query parameters found.</span></p>
+            <% } %>
+
+            <% if (Object.keys(networkInfo.body).length > 0) { %>
+                <h3>Request Body:</h3>
+                <ul>
+                    <% Object.entries(networkInfo.body).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= JSON.stringify(value) %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><strong>Request Body:</strong> <span class="value">No body data found.</span></p>
+            <% } %>
+
+            <% if (Object.keys(networkInfo.params).length > 0) { %>
+                <h3>Route Parameters:</h3>
+                <ul>
+                    <% Object.entries(networkInfo.params).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= value %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><strong>Route Parameters:</strong> <span class="value">No route parameters found.</span></p>
+            <% } %>
+        </section>
+
+        <!-- Server Information Section -->
+        <section>
+            <h2>Server Information</h2>
+            <div class="info-list">
+                <div class="info-item">
+                    <strong>Node.js Version:</strong>
+                    <span class="value"><%= serverInfo.nodeVersion %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Operating System:</strong>
+                    <span class="value"><%= serverInfo.os %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Uptime:</strong>
+                    <span class="value"><%= serverInfo.processUptime %></span>
+                </div>
+                <div class="info-item">
+                    <strong>Working Directory:</strong>
+                    <span class="value"><%= serverInfo.workingDirectory %></span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Route Information</h2>
+            <ul>
+                <li><strong>Path:</strong> <span class="value"><%= routeInfo.path %></span></li>
+                <li><strong>Methods:</strong> <span class="value"><%= Object.keys(routeInfo.methods).join(', ').toUpperCase() %></span></li>
+            </ul>
+        </section>
+        
+
+        <section>
+            <h2>Request Headers</h2>
+            <% if (Object.keys(networkInfo.headers).length > 0) { %>
+                <ul>
+                    <% Object.entries(networkInfo.headers).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= value %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><span class="value">No headers found.</span></p>
+            <% } %>
+        </section>
+
+        <section>
+            <h2>Session Information</h2>
+            <% if (networkInfo.session && Object.keys(networkInfo.session).length > 0) { %>
+                <ul>
+                    <% Object.entries(networkInfo.session).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= JSON.stringify(value) %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><span class="value">No session data available.</span></p>
+            <% } %>
+        </section>
+        
+        <section>
+            <h2>Memory Usage</h2>
+            <% if (serverInfo.memoryUsage && Object.keys(serverInfo.memoryUsage).length > 0) { %>
+                <ul>
+                    <% Object.entries(serverInfo.memoryUsage).forEach(([key, value]) => { %>
+                        <li><strong><%= key %>:</strong> <%= (value / 1024 / 1024).toFixed(2) %> MB</li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p><span class="value">Memory usage data not available.</span></p>
+            <% } %>
+        </section>
+        
+        <section>
+            <h2>Request Details</h2>
+            <pre><%= JSON.stringify(req, null, 2) %></pre>
+        </section>
+    </div>
+</body>
+</html>
