@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/header', {
+        title: 'GrantGrower - Farm Questions',
+        metaDescription: 'Answer questions about your farm to help us match you with grants.',
+        css: 'questions.css'
+    }) %>
+</head>
+<body>
+    <main class="questionnaire">
+        <div class="form-container">
+            <form id="farm-questions-form">
+                <h1 class="title">Let’s Learn About Your Farm</h1>
+
+                <!-- Step 1 -->
+                <div class="form-step active">
+                    <p class="question">What is the size of your farm (in acres)?</p>
+                    <input type="number" id="farm-size" name="farmSize" placeholder="E.g., 100" required>
+                    <div class="navigation-buttons">
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="form-step">
+                    <p class="question">Where is your farm located?</p>
+                    <input type="text" id="location" name="location" placeholder="Enter your farm's location" required>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="form-step">
+                    <p class="question">What type of crops or livestock do you grow/manage?</p>
+                    <input type="text" id="crop-type" name="cropType" placeholder="E.g., Wheat, Dairy" required>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="form-step">
+                    <p class="question">How many years have you been farming?</p>
+                    <input type="number" id="years-farming" name="yearsFarming" placeholder="E.g., 10" required>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="form-step">
+                    <p class="question">Do you have access to irrigation or water management systems?</p>
+                    <select id="water-access" name="waterAccess" required>
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="form-step">
+                    <p class="question">What type of grants are you most interested in?</p>
+                    <textarea id="grant-interest" name="grantInterest" placeholder="E.g., Equipment subsidies, Soil management, etc." required></textarea>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+                    </div>
+                </div>
+
+                <!-- Recap Step -->
+                <div class="form-step">
+                    <h2 class="recap-title">Here’s a summary of your answers:</h2>
+                    <div class="recap-content" id="recap"></div>
+                    <div class="navigation-buttons">
+                        <button type="button" class="prev-btn">Previous</button>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.form-step');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const recapContent = document.getElementById('recap');
+            const form = document.getElementById('farm-questions-form');
+            let currentStep = 0;
+
+            // Update the current step
+            function updateStep(step) {
+                steps.forEach((el, index) => {
+                    el.classList.toggle('active', index === step);
+                });
+            }
+
+            // Populate the recap content
+            function populateRecap() {
+                const formData = new FormData(form);
+                recapContent.innerHTML = '';
+                for (let [key, value] of formData.entries()) {
+                    const item = document.createElement('p');
+                    item.innerHTML = `<strong>${key.replace(/([A-Z])/g, ' $1')}:</strong> ${value}`;
+                    recapContent.appendChild(item);
+                }
+            }
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (currentStep < steps.length - 1) {
+                        currentStep++;
+                        updateStep(currentStep);
+                        if (currentStep === steps.length - 1) populateRecap();
+                    }
+                });
+            });
+
+            prevButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (currentStep > 0) {
+                        currentStep--;
+                        updateStep(currentStep);
+                    }
+                });
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                // Collect data and save it in cookies
+                const formData = new FormData(form);
+                for (let [key, value] of formData.entries()) {
+                    document.cookie = `${key}=${value}; path=/;`;
+                }
+
+                // Redirect to grants page
+                window.location.href = '/grants';
+            });
+        });
+    </script>
+</body>
+</html>

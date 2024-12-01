@@ -52,7 +52,7 @@ app.use("/", staticRoutes);
 router.use("/", dynamicRoutes);
 
 /* ----- Other Routes  ----- */
-const chatgptRouter = require('./routes/utils/chatgpt.js');
+const chatgptRouter = require('./utils/chatgpt.js');
 app.use('/api', chatgptRouter);
 
 /* ----- Server ----- */
