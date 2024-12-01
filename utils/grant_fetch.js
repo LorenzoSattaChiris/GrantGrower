@@ -27,7 +27,7 @@ async function fetchAndProcessGrants() {
 
         // Save grants to file
         try {
-          const filePath = path.join(__dirname, '..', 'routes', 'static', 'grant_list.json');
+          const filePath = path.join(__dirname, 'grant_list.json');
           fs.writeFileSync(filePath, JSON.stringify(grants, null, 2));
           console.log(`[INFO] grant_list.json successfully updated at ${new Date().toISOString()}`);
         } catch (error) {

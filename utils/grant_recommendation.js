@@ -1,6 +1,21 @@
 // grant_recommendation.js
 
-const { grants } = require('./grant_list'); 
+let grants = [];
+
+(async () => {
+    try {
+        const { grants: fetchedGrants } = require('./grant_list');
+        grants = fetchedGrants;
+    } catch (error) {
+        console.error(`[ERROR] Failed to load grant_list - ${error.message}`);
+        const { fetchAndProcessGrants } = require('./grant_fetch');
+        try {
+            grants = await fetchAndProcessGrants();
+        } catch (fetchError) {
+            console.error(`[ERROR] Failed to fetch grants - ${fetchError.message}`);
+        }
+    }
+})();
 
 function getRecommendedGrants(farmerData) {
     const { location, cropType, waterAccess, grantInterest, farmSize, yearsFarming } = farmerData;
