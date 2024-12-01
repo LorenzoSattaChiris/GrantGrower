@@ -6,7 +6,6 @@ const logger = require("morgan");
 const subdomain = require("express-subdomain");
 const helmet = require("helmet");
 const dotenv = require("dotenv");
-const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
 const os = require("os"); 
