@@ -70,7 +70,7 @@ body {
   width: 20%;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ddd;
+  border:1px solid #ddd;
   border-radius: 5px;
 }
 
@@ -104,8 +104,7 @@ body {
 }
 
 .grant-card.visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 .grant-card:hover {
@@ -205,4 +204,105 @@ body {
 
 .grant-card.visible {
   animation: fadeInUp 0.5s ease forwards;
+}
+
+/* Hover Effects for Grant Cards */
+.grant-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  background-color: rgba(255, 255, 255, 0.95); /* Subtle background highlight */
+}
+
+.recommended-grant-card:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25); /* Stronger shadow */
+  background-color: rgba(240, 248, 255, 0.9); /* Subtle tint */
+  border-color: var(--secondary-color); /* Change border color */
+}
+
+
+/* Recommended Grant Card Styling */
+.recommended-grant-card {
+    border: 2px solid var(--primary-color); /* Different border */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    background-color: #f0f8ff; /* Light background to differentiate */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.recommended-grant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--secondary-color); /* Change border color on hover */
+}
+
+/* Collapsible Container Styling */
+.existing-data-collapsible {
+  position: fixed;
+  top: 40px; /* Align with "Recommended for You" section */
+  left: 20px;
+  width: 300px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: max-height 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Collapsible Header */
+.collapsible-header {
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.collapsible-header span {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.tooltip-icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.tooltip-icon:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  top: 10px;
+  right: 35px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* Collapsible Content */
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 15px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.collapsible-content.open {
+  max-height: 300px; /* Adjust based on content */
+  padding: 15px;
+}
+
+.collapsible-content p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.collapsible-content button {
+  margin-top: 15px;
+  width: 100%;
+  font-size: 1rem;
 }

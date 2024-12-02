@@ -1,0 +1,41 @@
+<%- include('partials/header', { 
+    title: `Apply for ${grant.pageTitle}`, 
+    metaDescription: grant.summary,
+    css: '/apply.css' // Absolute path to ensure correct loading
+}) %>
+
+<main class="apply-page">
+    <div class="container">
+        <!-- Left Section: Grant Information -->
+        <section class="left-section">
+            <h1><%= grant.pageTitle %></h1>
+            <p><strong>Summary:</strong> <%= grant.summary %></p>
+            <div class="guidelines">
+                <h2>Guidelines</h2>
+                <p><%= grant.content %></p> <!-- Render extracted content -->
+            </div>
+            <a href="<%= grant.link %>" target="_blank" class="btn primary-btn">Official Page</a>
+        </section>
+
+        <!-- Right Section: Editable Application Template -->
+        <section class="right-section">
+            <h2>Your Application Template</h2>
+            <textarea id="applicationTemplate" contenteditable="true">
+Dear [Grant Provider's Name],
+
+I am writing to apply for the <%= grant.pageTitle %> grant. My farm, [Farm Name], specializes in [specific farming type] and is located in [location]. This grant would be instrumental in helping us achieve [specific goals].
+
+Our farm currently meets the criteria outlined, including [key points]. We have also implemented [relevant practices], demonstrating our commitment to sustainability and effective land management.
+
+[Additional Details: Explain specific steps, timeline, or strategies aligned with the grant's objectives.]
+
+Thank you for considering my application. Please feel free to contact me for additional information.
+
+Sincerely,
+[Your Name]
+            </textarea>
+        </section>
+    </div>
+</main>
+
+<%- include('partials/footer') %>

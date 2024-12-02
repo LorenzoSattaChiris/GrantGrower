@@ -30,4 +30,5 @@ p, li, blockquote {
     top: 30px;
     right: 40px;
     height: 150px;
+    cursor: pointer;
 }

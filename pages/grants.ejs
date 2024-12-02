@@ -19,19 +19,52 @@
         </select>
     </section>
 
-    <!-- My Grant List Section -->
-    <section id="grants-list">
-        <h2 class="section-title">My Grants (Recommended)</h2>
-        <div class="grant-categories" id="myGrantCategories"></div>
-    </section>
-
     <!-- Grant List Section -->
     <section id="grants-list">
-        <h2 class="section-title">All Grants</h2>
         <div class="grant-categories" id="grantCategories"></div>
     </section>
 
-    
+    <% if (existingData) { %>
+        <div class="existing-data-collapsible">
+            <div class="collapsible-header">
+                <span>Your Data</span>
+                <i class="tooltip-icon" data-tooltip="Expand or collapse your data">&#9432;</i> <!-- Info Icon -->
+            </div>
+            <div class="collapsible-content">
+                <p><strong>Farm Size:</strong> <%= existingData.farmSize %> acres</p>
+                <p><strong>Location:</strong> <%= existingData.location %></p>
+                <p><strong>Crop/Livestock Type:</strong> <%= existingData.cropType %></p>
+                <p><strong>Years Farming:</strong> <%= existingData.yearsFarming %></p>
+                <p><strong>Water Access:</strong> <%= existingData.waterAccess %></p>
+                <p><strong>Grant Interest:</strong> <%= existingData.grantInterest %></p>
+                <button id="editData" class="btn primary-btn">Edit Data</button>
+            </div>
+        </div>
+    <% } %>    
+
+        <% if (existingData) { %>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('editData').addEventListener('click', () => {
+                        window.location.href = '/questions';
+                    });
+
+                    const collapsibleHeader = document.querySelector('.collapsible-header');
+                    const collapsibleContent = document.querySelector('.collapsible-content');
+                
+                    collapsibleHeader.addEventListener('click', () => {
+                        const isOpen = collapsibleContent.classList.contains('open');
+                
+                        if (isOpen) {
+                            collapsibleContent.classList.remove('open');
+                        } else {
+                            collapsibleContent.classList.add('open');
+                        }
+                    });
+                });
+            </script>
+            <% } %>
+
     <!-- Email Notification Section -->
     <section class="notification-section">
         <h2 class="section-title">Stay Updated</h2>
@@ -53,132 +86,7 @@
     </section>
 </main>
 
-<script>
-    document.addEventListener('DOMContentLoaded', async () => {
-        try {
-            const response = await fetch('/api/grants');
-            if (!response.ok) throw new Error('Failed to fetch grants.');
-            const categorizedGrants = await response.json();
-            const grantCategoriesDiv = document.getElementById('grantCategories');
-
-            // Get all categories and populate the category filter dropdown
-            const categories = Object.keys(categorizedGrants);
-            const categoryFilter = document.getElementById('categoryFilter');
-            categories.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category;
-                option.textContent = category;
-                categoryFilter.appendChild(option);
-            });
-
-            // Function to render grants
-            function renderGrants(filteredGrants) {
-                grantCategoriesDiv.innerHTML = ''; // Clear existing grants
-
-                Object.keys(filteredGrants).forEach(category => {
-                    const grants = filteredGrants[category];
-                    if (grants.length === 0) return;
-
-                    // Create category heading
-                    const categoryHeading = document.createElement('h3');
-                    categoryHeading.classList.add('category-heading');
-                    categoryHeading.textContent = category;
-                    grantCategoriesDiv.appendChild(categoryHeading);
-
-                    // Create grants container
-                    const grantsContainer = document.createElement('div');
-                    grantsContainer.classList.add('grant-cards');
-
-                    grants.forEach((grant, index) => {
-                        const card = document.createElement('div');
-                        card.classList.add('grant-card');
-                        card.innerHTML = `
-                            <h4 class="grant-title">${grant.title}</h4>
-                            <p class="grant-info"><strong>Updated:</strong> ${new Date(grant.updated).toLocaleDateString()}</p>
-                            <div class="button-row">
-                                <button class="btn primary-btn" onclick="location.href='/application-template'">Apply Now</button>
-                                <button class="btn secondary-btn" onclick="window.open('${grant.link}', '_blank')">Official Page</button>
-                            </div>
-                        `;
-                        grantsContainer.appendChild(card);
-
-                        // Add animation delay
-                        setTimeout(() => {
-                            card.classList.add('visible');
-                        }, index * 100); // Stagger animations by 100ms
-                    });
-
-                    grantCategoriesDiv.appendChild(grantsContainer);
-                });
-            }
-
-            // Initial render
-            renderGrants(categorizedGrants);
-
-            // Live Search and Filtering
-            const searchBar = document.getElementById('searchBar');
-
-            function filterGrants() {
-                const searchTerm = searchBar.value.toLowerCase();
-                const selectedCategory = categoryFilter.value;
-
-                const filteredGrants = {};
-
-                Object.keys(categorizedGrants).forEach(category => {
-                    if (selectedCategory !== 'All' && category !== selectedCategory) {
-                        return;
-                    }
-                    const grants = categorizedGrants[category].filter(grant => {
-                        return grant.title.toLowerCase().includes(searchTerm);
-                    });
-                    if (grants.length > 0) {
-                        filteredGrants[category] = grants;
-                    }
-                });
-
-                renderGrants(filteredGrants);
-            }
-
-            searchBar.addEventListener('input', () => {
-                filterGrants();
-            });
-
-            categoryFilter.addEventListener('change', () => {
-                filterGrants();
-            });
-
-            // Handle email subscription
-            const notificationForm = document.getElementById('notification-form');
-            notificationForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('email').value;
-                // Save email for notifications
-                fetch('/api/subscribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                }).then(res => {
-                    if (res.ok) alert('Subscribed successfully!');
-                    else alert('Subscription failed. Try again.');
-                });
-            });
-        } catch (error) {
-            console.error('Error loading grants:', error);
-            const grantCategoriesDiv = document.getElementById('grantCategories');
-            grantCategoriesDiv.innerHTML = '<p class="error">Failed to load grants. Please try again later.</p>';
-        }
-    });
-
-    function openChat() {
-        alert('Chat support will open in a new window.');
-        window.open('https://chat.example.com');
-    }
-
-    function callSupport() {
-        alert('Dialing support...');
-        window.location.href = 'tel:+18001234567';
-    }
-</script>
+<script type="text/javascript" src="grants.js"></script>
 
 </body>
 </html>
